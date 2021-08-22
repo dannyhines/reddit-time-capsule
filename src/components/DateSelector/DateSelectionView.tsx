@@ -26,7 +26,7 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
     }
 
     return (
-        <Row justify="center" gutter={16} >
+        <Row justify="center" style={{ padding: 20 }}>
             <Col lg={14} md={18}>
                 <Card
                     bordered={false}
@@ -56,7 +56,8 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                             />
                         </Col>
                         <Col>
-                            <Button type="primary" htmlType="submit" size="large" disabled={date === null}>
+                            <Button type="primary" htmlType="submit" size="large"
+                                disabled={date === null || date.isBefore('2010-01-01') || date.isAfter(new Date())}>
                                 Go
                             </Button>
                         </Col>
