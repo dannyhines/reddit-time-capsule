@@ -1,24 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ContentView from './components/ContentView';
+import Header from './components/Header';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          It worked!
-        </p>
-        <a
-          className="App-link"
-          href="https://reddit.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Reddit
-        </a>
-      </header>
+      <Header />
+      <ContentView />
     </div>
   );
 }
