@@ -1,4 +1,8 @@
 .content-view {
-  max-width: 1120px;
+  max-width: 1250px;
   margin: 0 auto;
+}
+
+.ant-card-meta-title {
+  white-space: normal;
 }

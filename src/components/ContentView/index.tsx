@@ -5,6 +5,7 @@ import './ContentView.css'
 import NewsView from "../NewsView";
 import { Post } from "../../types/Post";
 import dayjs, { Dayjs } from 'dayjs';
+import ImageCard from "../ImageCard";
 const { Title } = Typography;
 
 interface ContentViewProps {
@@ -14,7 +15,9 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
 
     const [loading, setLoading] = useState(false)
     const [startDate, setStartDate] = useState<number>(0)
-    const [posts, setPosts] = useState<Post[]>([])
+    const [news, setNews] = useState<Post[]>([])
+    const [memes, setMemes] = useState<Post[]>([])
+    const [pics, setPics] = useState<Post[]>([])
 
     function dateChanged(value: number) {
         setStartDate(value)
@@ -23,17 +26,26 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
     useEffect(() => {
         const endDate = (startDate || new Date().getTime()) + 86400
         // console.log("making request with startDate ", startDate, ", endDate: ", endDate)
-        const url = `https://api.pushshift.io/reddit/search/submission/?q=&after=${startDate}&before=${endDate}&subreddit=news&metadata=false&frequency=hour&advanced=false&sort=desc&sort_type=num_comments&size=10`;
+        const url = `https://api.pushshift.io/reddit/search/submission/?q=&after=${startDate}&before=${endDate}&metadata=false&frequency=hour&advanced=false&sort=desc&sort_type=num_comments&size=10&subreddit=`;
 
         const fetchData = async () => {
             setLoading(true)
             try {
-                const response = await fetch(url);
-                const json = await response.json();
-                console.log("success, response: ", json.data);
-                setPosts(json.data.slice(0, 10))
+                const newsResponse = await fetch(url + 'news');
+                const memesResponse = await fetch(url + 'memes');
+                const picsResponse = await fetch(url + 'pics');
+
+                const newsJson = await newsResponse.json();
+                const memesJson = await memesResponse.json();
+                const picsJson = await picsResponse.json();
+
+                // console.log("success, response: ", json.data);
+                setNews(newsJson.data.slice(0, 10))
+                setMemes(memesJson.data.slice(0, 8))
+                setPics(picsJson.data.slice(0, 8))
+
             } catch (error) {
-                console.log("error", error);
+                console.log("error fetching posts: ", error);
             } finally {
                 setLoading(false)
             }
@@ -58,26 +70,40 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
                 {!loading &&
                     <div>
                         <Divider style={{ borderTopColor: '#636363' }}>
-                            <Title level={2}>{stringDate}</Title>
+                            <h1>{stringDate}</h1>
                         </Divider>
                         <Row gutter={16} justify='center'>
-                            <Col lg={12} md={18} xs={24}>
-                                <NewsView stories={posts} />
+                            <Col lg={8} md={12} xs={24}>
+                                <NewsView stories={news} />
                             </Col>
-                            {/* <Col span={6}>
-                            <ImageCard
-                                title="Here's a title"
-                                subtitle="r/memes · 714 pts"
-                                imgSrc="https://i.redditmedia.com/SCPNX3yCl7HZk8I-7nkAQ8dcccBmqjr4pNlNfLPPA50.jpg?fit=crop&crop=faces%2Centropy&arh=2&w=216&s=78902c1f4daa0c98fa61469a1dee9250"
-                            />
-                        </Col>
-                        <Col span={6}>
-                            <ImageCard
-                                title="Here's a title"
-                                subtitle="r/memes · 714 pts"
-                                imgSrc="https://i.redditmedia.com/SCPNX3yCl7HZk8I-7nkAQ8dcccBmqjr4pNlNfLPPA50.jpg?fit=crop&crop=faces%2Centropy&arh=2&w=216&s=78902c1f4daa0c98fa61469a1dee9250"
-                            />
-                        </Col> */}
+                            <Col lg={8} md={12} xs={12}>
+                                <h2>
+                                    r/Pics
+                                </h2>
+                                {pics.filter(x => x.url.length).map(({ title, score, url }) => (
+                                    <ImageCard
+                                        key={title}
+                                        title={title}
+                                        subtitle={`r/pics · ${score} pts`}
+                                        imgSrc={url}
+                                    />
+                                ))}
+
+                            </Col>
+                            <Col lg={8} md={12} xs={12}>
+                                <h2>
+                                    r/Memes
+                                </h2>
+                                {memes.filter(x => x.url.length).map(({ title, score, url }) => (
+                                    <ImageCard
+                                        key={title}
+                                        title={title}
+                                        subtitle={`r/memes · ${score} pts`}
+                                        imgSrc={url}
+                                    />
+                                ))}
+
+                            </Col>
                         </Row>
                     </div>
                 }

@@ -26,11 +26,12 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                     bordered={false}
                     headStyle={{ borderBottom: 0 }}
                 >
-                    <h2>
-                        Reddit on a Day
-                    </h2>
+                    <h1>
+                        The Internet on a Day
+                    </h1>
                     <p style={{ marginBottom: '1rem' }}>
                         See what the internet was talking about on a random day in the past decade.
+                        <br /><br />
                         Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and now.
                     </p>
                     <Row gutter={16} justify="center" style={{ padding: '8px 0' }}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from 'antd'
+import { Card, Image } from 'antd'
 const { Meta } = Card;
 
 interface CardViewProps {
@@ -10,14 +10,17 @@ interface CardViewProps {
 
 const ImageCard: React.FC<CardViewProps> = (props) => {
   const { title, subtitle, imgSrc } = props;
+
   return (
-    <Card
-      hoverable
-      style={{ maxWidth: 400 }}
-      cover={<img alt="example" src={imgSrc} />}
-    >
-      <Meta title={title} description={subtitle || ""} />
-    </Card>
+    <div>
+      <Card
+        hoverable
+        style={{ maxWidth: 400, margin: '16px 0' }}
+        cover={<Image alt={title} src={imgSrc} />}
+      >
+        <Meta title={title} description={subtitle || ""} />
+      </Card>
+    </div>
   );
 };
 
