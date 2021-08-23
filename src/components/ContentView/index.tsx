@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BackTop, Row, Col, Spin, Typography, Divider } from 'antd';
+import { BackTop, Row, Col, Spin, Divider } from 'antd';
 import DateSelectionView from '../DateSelector';
 import './ContentView.css'
 import NewsView from "../NewsView";
