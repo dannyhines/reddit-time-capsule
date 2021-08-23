@@ -10,24 +10,26 @@ interface NewsViewProps {
 const NewsView: React.FC<NewsViewProps> = (props) => {
     const { stories } = props;
     return (
-        <Card style={{ textAlign: 'left' }}>
-            <h1>
+        <>
+            <h2>
                 r/News
-            </h1>
-            <List
-                itemLayout="horizontal"
-                dataSource={stories}
-                renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                            avatar={<Avatar shape="square" src={item.thumbnail} />}
-                            title={<a href={item.url || item.full_link}>{item.title}</a>}
-                            description={`${dayjs(item.created_utc * 1000).format('h:mm a')} · ${item.author} · ${item.score?.toString()} pts`}
-                        />
-                    </List.Item>
-                )}
-            />
-        </Card>
+            </h2><Card style={{ textAlign: 'left' }}>
+
+                <List
+                    itemLayout="horizontal"
+                    dataSource={stories}
+                    renderItem={item => (
+                        <List.Item>
+                            <List.Item.Meta
+                                avatar={<Avatar shape="square" src={item.thumbnail} />}
+                                title={<a href={item.url || item.full_link}>{item.title}</a>}
+                                description={`${dayjs(item.created_utc * 1000).format('h:mm a')} · ${item.author} · ${item.score?.toString()} pts`}
+                            />
+                        </List.Item>
+                    )}
+                />
+            </Card>
+        </>
     );
 };
 

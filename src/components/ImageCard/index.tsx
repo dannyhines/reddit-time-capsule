@@ -1,24 +1,28 @@
 import React from "react";
 import { Card, Image } from 'antd'
+import { Post } from "../../types/Post";
 const { Meta } = Card;
 
 interface CardViewProps {
-  title: string
-  subtitle?: string
-  imgSrc: string
+  post: Post
 }
 
 const ImageCard: React.FC<CardViewProps> = (props) => {
-  const { title, subtitle, imgSrc } = props;
+  const { post } = props;
 
   return (
     <div>
       <Card
         hoverable
         style={{ maxWidth: 400, margin: '16px 0' }}
-        cover={<Image alt={title} src={imgSrc} />}
+        cover={<Image alt="Failed to load image" src={post.url} />}
       >
-        <Meta title={title} description={subtitle || ""} />
+        <a href={post.full_link}>
+          <Meta
+            title={post.title}
+            description={`r/${post.subreddit} · ${post.score} pts`}
+          />
+        </a>
       </Card>
     </div>
   );

@@ -1,6 +1,7 @@
 .content-view {
   max-width: 1250px;
   margin: 0 auto;
+  padding: 10px;
 }
 
 .ant-card-meta-title {

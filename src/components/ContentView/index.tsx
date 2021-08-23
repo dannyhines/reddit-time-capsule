@@ -6,6 +6,7 @@ import NewsView from "../NewsView";
 import { Post } from "../../types/Post";
 import dayjs, { Dayjs } from 'dayjs';
 import ImageCard from "../ImageCard";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 
 interface ContentViewProps {
 }
@@ -25,13 +26,13 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
     useEffect(() => {
         const endDate = (startDate || new Date().getTime()) + 86400
         // console.log("making request with startDate ", startDate, ", endDate: ", endDate)
-        const url = `https://api.pushshift.io/reddit/search/submission/?q=&after=${startDate}&before=${endDate}&metadata=false&frequency=hour&advanced=false&sort=desc&sort_type=num_comments&size=10&subreddit=`;
+        const url = `https://api.pushshift.io/reddit/search/submission/?q=&after=${startDate}&before=${endDate}&metadata=false&frequency=hour&advanced=false&sort=desc&sort_type=score&size=10&subreddit=`;
 
         const fetchData = async () => {
             setLoading(true)
             try {
                 const newsResponse = await fetch(url + 'news');
-                const memesResponse = await fetch(url + 'memes');
+                const memesResponse = await fetch(url + 'memes,memeeconomy,dankmemes');
                 const picsResponse = await fetch(url + 'pics');
 
                 const newsJson = await newsResponse.json();
@@ -56,7 +57,9 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
     }, [startDate]);
 
     const dateObj: Dayjs = dayjs(startDate * 1000)
-    const stringDate = `${getWeekDay(dateObj)},  ${dateObj.format('MMMM')} ${getOrdinalNum(dateObj.date())} ${dateObj.year()}`
+    const stringDate = `${getWeekDay(dateObj)},  ${dateObj.format('MMM.')} ${getOrdinalNum(dateObj.date())} ${dateObj.year()}`
+
+    const { width } = useWindowDimensions();
 
     return (
         <div className="content-view">
@@ -69,7 +72,7 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
                 {!loading &&
                     <div>
                         <Divider style={{ borderTopColor: '#636363' }}>
-                            <h1>{stringDate}</h1>
+                            {width > 600 ? <h1>{stringDate}</h1> : <h3>{stringDate}</h3>}
                         </Divider>
                         <Row gutter={16} justify='center'>
                             <Col lg={8} md={12} xs={24}>
@@ -79,12 +82,10 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
                                 <h2>
                                     r/Pics
                                 </h2>
-                                {pics.filter(x => x.url.length).map(({ title, score, url }) => (
+                                {pics.filter(x => x.url.length).map((item) => (
                                     <ImageCard
-                                        key={title}
-                                        title={title}
-                                        subtitle={`r/pics · ${score} pts`}
-                                        imgSrc={url}
+                                        key={item.id}
+                                        post={item}
                                     />
                                 ))}
 
@@ -93,12 +94,10 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
                                 <h2>
                                     r/Memes
                                 </h2>
-                                {memes.filter(x => x.url.length).map(({ title, score, url }) => (
+                                {memes.filter(x => x.url.length).map((item) => (
                                     <ImageCard
-                                        key={title}
-                                        title={title}
-                                        subtitle={`r/memes · ${score} pts`}
-                                        imgSrc={url}
+                                        key={item.id}
+                                        post={item}
                                     />
                                 ))}
 
