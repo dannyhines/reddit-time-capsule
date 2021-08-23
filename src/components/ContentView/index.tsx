@@ -58,10 +58,10 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
                 {!loading &&
                     <div>
                         <Divider style={{ borderTopColor: '#636363' }}>
-                            <Title>{stringDate}</Title>
+                            <Title level={2}>{stringDate}</Title>
                         </Divider>
-                        <Row gutter={16}>
-                            <Col lg={12}>
+                        <Row gutter={16} justify='center'>
+                            <Col lg={12} md={18} xs={24}>
                                 <NewsView stories={posts} />
                             </Col>
                             {/* <Col span={6}>

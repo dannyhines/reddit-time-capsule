@@ -1,5 +1,5 @@
 .App-logo {
-  height: 60px;
+  height: 45px;
   pointer-events: none;
   margin: 1rem;
   padding-left: 4vw;
@@ -12,5 +12,5 @@
   /* flex-direction: column; */
   align-items: center;
   justify-content: left;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(8px + 2vmin);
 }
