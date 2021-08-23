@@ -1,12 +1,13 @@
 export interface Post {
   title: string;
-  author?: string;
-  full_link?: string;
-  url?: string;
-  subreddit?: string;
-  score?: number;
-  num_comments?: number;
+  author: string;
+  full_link: string;
+  url: string;
+  subreddit: string;
+  score: number;
   preview?: ImagePreview;
+  thumbnail?: string;
+  created_utc: number;
 }
 
 interface ImagePreview {

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Form, Row } from 'antd';
+import { Button, Card, Col, Row } from 'antd';
 import DatePicker from './DatePicker'
-// import * as dayjs from 'dayjs'
 import { Dayjs } from 'dayjs';
 import getRandomDate from './getRandomDate';
 
@@ -31,8 +30,8 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                         Reddit on a Day
                     </h2>
                     <p style={{ marginBottom: '1rem' }}>
-                        Get a glimpse of what the internet was talking about on a random day in the past decade.
-                        Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and today.
+                        See what the internet was talking about on a random day in the past decade.
+                        Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and now.
                     </p>
                     <Row gutter={16} justify="center" style={{ padding: '8px 0' }}>
                         <Col>
