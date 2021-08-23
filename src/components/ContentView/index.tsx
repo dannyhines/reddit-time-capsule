@@ -6,7 +6,6 @@ import NewsView from "../NewsView";
 import { Post } from "../../types/Post";
 import dayjs, { Dayjs } from 'dayjs';
 import ImageCard from "../ImageCard";
-const { Title } = Typography;
 
 interface ContentViewProps {
 }
