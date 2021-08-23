@@ -6,7 +6,7 @@ import { Dayjs } from 'dayjs';
 import getRandomDate from './getRandomDate';
 
 interface DateSelectionProps {
-    dateChanged: (epoch: number) => void
+    handleSubmit: (epoch: number) => void
 }
 
 const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
@@ -16,21 +16,15 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
     useEffect(() => {
         // Only update the parent date if it's not null
         if (date) {
-            props.dateChanged(date.unix())
+            props.handleSubmit(date.startOf('day').unix())
         }
-    }, [date])
-
-    function onChange(value: Dayjs | null, dateString: string) {
-        console.log("onChange(): ", value, dateString);
-        setDate(value)
-    }
+    }, [])
 
     return (
         <Row justify="center" style={{ padding: 20 }}>
             <Col lg={14} md={18}>
                 <Card
                     bordered={false}
-                    style={{ textAlign: 'left' }}
                     headStyle={{ borderBottom: 0 }}
                 >
                     <h2>
@@ -50,14 +44,19 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                             <DatePicker
                                 value={date}
                                 format="MM-DD-YYYY"
-                                onChange={onChange}
+                                onChange={(value) => setDate(value)}
                                 size="large"
                                 aria-label="date selector"
                             />
                         </Col>
                         <Col>
                             <Button type="primary" htmlType="submit" size="large"
-                                disabled={date === null || date.isBefore('2010-01-01') || date.isAfter(new Date())}>
+                                disabled={date === null || date.isBefore('2010-01-01') || date.isAfter(new Date())}
+                                onClick={() => {
+                                    if (date) {
+                                        props.handleSubmit(date.startOf('day').unix())
+                                    }
+                                }}>
                                 Go
                             </Button>
                         </Col>

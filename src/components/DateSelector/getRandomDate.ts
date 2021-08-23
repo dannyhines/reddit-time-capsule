@@ -9,7 +9,7 @@ export default (
 
   const dateOffset = Math.floor(Math.random() * max + 1);
 
-  const newDate = dayjs(fromMilli + dateOffset);
+  const newDate = dayjs(fromMilli + dateOffset).startOf("day");
 
   return dayjs(newDate);
 };

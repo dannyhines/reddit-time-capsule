@@ -8,12 +8,12 @@ interface CardViewProps {
   imgSrc: string
 }
 
-const CardView: React.FC<CardViewProps> = (props) => {
+const ImageCard: React.FC<CardViewProps> = (props) => {
   const { title, subtitle, imgSrc } = props;
   return (
     <Card
       hoverable
-      style={{ maxWidth: 400, textAlign: 'left' }}
+      style={{ maxWidth: 400 }}
       cover={<img alt="example" src={imgSrc} />}
     >
       <Meta title={title} description={subtitle || ""} />
@@ -21,4 +21,4 @@ const CardView: React.FC<CardViewProps> = (props) => {
   );
 };
 
-export default CardView;
+export default ImageCard;
