@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Image } from 'antd'
 import { Post } from "../../types/Post";
+import { useImage } from "./useImage";
 const { Meta } = Card;
 
 interface CardViewProps {
@@ -8,8 +9,13 @@ interface CardViewProps {
 }
 
 const ImageCard: React.FC<CardViewProps> = (props) => {
-  const { post } = props;
 
+  const { post } = props;
+  const { hasError } = useImage(post.url);
+
+  if (hasError) {
+    return null;
+  }
   return (
     <div>
       <Card

@@ -21,7 +21,7 @@ const NewsView: React.FC<NewsViewProps> = (props) => {
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                                avatar={<Avatar shape="square" src={item.thumbnail} />}
+                                avatar={<Avatar shape="square" src={item.thumbnail} size='large' />}
                                 title={<a href={item.url || item.full_link}>{item.title}</a>}
                                 description={`${dayjs(item.created_utc * 1000).format('h:mm a')} · ${item.author} · ${item.score?.toString()} pts`}
                             />

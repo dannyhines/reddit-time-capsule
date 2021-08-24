@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Row } from 'antd';
+import { Button, Card, Col, Divider, Row } from 'antd';
 import DatePicker from './DatePicker'
 import { Dayjs } from 'dayjs';
 import getRandomDate from './getRandomDate';
@@ -11,13 +11,14 @@ interface DateSelectionProps {
 
 const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
 
+    const { handleSubmit } = props;
     const { width } = useWindowDimensions();
     const [date, setDate] = useState<Dayjs | null>(getRandomDate())
 
     useEffect(() => {
-        // Only update the parent date if it's not null
+        // If the date exists, update the parent
         if (date) {
-            props.handleSubmit(date.startOf('day').unix())
+            handleSubmit(date.startOf('day').unix())
         }
     }, [])
 
@@ -37,8 +38,8 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                         <br /><br />
                         Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and today.
                     </p>
-                    <Row gutter={16} justify="center" align='middle' style={{ padding: '8px 0' }}>
-                        <Col md={4} xs={23}>
+                    <Row gutter={16} justify="center" align='middle'>
+                        <Col>
                             Select a date:
                         </Col>
                         <Col>
@@ -48,33 +49,41 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                                 onChange={(value) => setDate(value)}
                                 size={buttonSize}
                                 aria-label="date selector"
+                                style={{ margin: '8px 0' }}
                             />
                         </Col>
                         <Col>
-                            or
-                        </Col>
-                        <Col>
-                            <Button onClick={() => setDate(getRandomDate())} size={buttonSize}>
-                                Random
+                            <Button type="primary" htmlType="submit" size={buttonSize}
+                                style={{ paddingLeft: 10, paddingRight: 10 }}
+                                disabled={date === null || date.isBefore('2010-01-01') || date.isAfter(new Date())}
+                                onClick={() => {
+                                    if (date) {
+                                        handleSubmit(date.startOf('day').unix())
+                                    }
+                                }}>
+                                Go
                             </Button>
                         </Col>
                     </Row>
 
+                    <Row justify='center' align='middle'>
+                        <Divider style={{ width: '40%', minWidth: '40%' }}>
+                            or
+                        </Divider>
+
+                    </Row>
                     <Row justify='center'>
-                        <Button type="primary" htmlType="submit" size='large'
-                            style={{ margin: 20, paddingLeft: 40, paddingRight: 40 }}
-                            disabled={date === null || date.isBefore('2010-01-01') || date.isAfter(new Date())}
-                            onClick={() => {
-                                if (date) {
-                                    props.handleSubmit(date.startOf('day').unix())
-                                }
-                            }}>
-                            Go
+                        <Button
+                            onClick={() => handleSubmit(getRandomDate().startOf('day').unix())}
+                            size='large'
+                            style={{ margin: '8px 0' }}
+                        >
+                            Random
                         </Button>
                     </Row>
                 </Card>
             </Col>
-        </Row>
+        </Row >
     );
 };
 
