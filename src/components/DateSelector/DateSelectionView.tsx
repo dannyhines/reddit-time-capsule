@@ -38,7 +38,7 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                         <br /><br />
                         Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and today.
                     </p>
-                    <Row gutter={16} justify="center" align='middle'>
+                    <Row gutter={16} justify="center" align='middle' style={{ marginTop: 12 }}>
                         <Col>
                             Select a date:
                         </Col>
@@ -49,7 +49,6 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                                 onChange={(value) => setDate(value)}
                                 size={buttonSize}
                                 aria-label="date selector"
-                                style={{ margin: '8px 0' }}
                             />
                         </Col>
                         <Col>
@@ -76,7 +75,7 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                         <Button
                             onClick={() => handleSubmit(getRandomDate().startOf('day').unix())}
                             size='large'
-                            style={{ margin: '8px 0' }}
+                        // style={{ margin: '8px 0' }}
                         >
                             Random
                         </Button>

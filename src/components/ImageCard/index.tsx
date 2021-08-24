@@ -22,6 +22,7 @@ const ImageCard: React.FC<CardViewProps> = (props) => {
         hoverable
         style={{ maxWidth: 400, margin: '16px 0' }}
         cover={<Image alt="Failed to load image" src={post.url} />}
+        bodyStyle={{ padding: 12 }}
       >
         <a href={post.full_link}>
           <Meta
