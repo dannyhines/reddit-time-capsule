@@ -4,7 +4,10 @@
 
 [Check it out](https://reddit-time-capsule.com/)
 
-A single-page React website written in Typescript, along with AWS infrastructure **as code** using AWS Cloud Development Kit. To deploy your own version of this project, you'll need an AWS account and your own domain name (instructions [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) on how to purchase via Route53). With your own domain you'll be able to deploy your app using only 3 commands.
+A single-page React site written in Typescript, along with AWS infrastructure **as code** using AWS Cloud Development Kit.
+Shoutout to Jason Baumgartner ([pushshift.io](https://pushshift.io/)) for creating a public API for fetching Reddit history.
+
+To deploy your own version of this project, you'll need an AWS account and your own domain name (instructions [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) on how to purchase via Route53). With your own domain you'll be able to deploy your app using only 3 commands.
 
 ## Development
 
