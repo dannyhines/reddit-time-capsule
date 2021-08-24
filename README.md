@@ -1,8 +1,12 @@
-# Getting Started with Create React App
+# Reddit Time Capsule
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### See what the internet was talking about on a random day in the past decade.
 
-## Available Scripts
+[Check it out](https://reddit-time-capsule.com/)
+
+A single-page React website written in Typescript, along with AWS infrastructure **as code** using AWS Cloud Development Kit. To deploy your own version of this project, you'll need an AWS account and your own domain name (instructions [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) on how to purchase via Route53). With your own domain you'll be able to deploy your app using only 3 commands.
+
+## Development
 
 In the project directory, you can run:
 
@@ -19,28 +23,23 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Deployment
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This project uses AWS CDK to deploy all the required infrastructure. The only step is to [purchase a domain name](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) and replace line 12 of `./infrastructure/bin/infrastructure.ts` with your domain name. You'll probably also want to change the id's in `./infrastructure/lib/static-site.ts` so you can more easily identify your resources.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+When you're ready to deploy your React app, you'll first need to build your project:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### `npm run build`
 
-### `npm run eject`
+This builds the app for production to the `build` folder.\
+It compiles to Javascript, correctly bundles React in production mode and optimizes the build for the best performance.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Next navigate to the infrastructure folder and do the same to compile the Typescript to Javascript:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### `cd infrastructure && npm run build`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Finally deploy the stack:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### `cdk deploy`
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+You'll need to have the AWS command line tools installed, and configure your AWS credentials with `aws configure` in order to deploy.
