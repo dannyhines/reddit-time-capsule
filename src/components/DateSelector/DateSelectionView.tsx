@@ -14,21 +14,40 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
     const { handleSubmit } = props;
     const { width } = useWindowDimensions();
     const [date, setDate] = useState<Dayjs | null>(getRandomDate())
+    // this variable makes sure they don't spam the 'Go' or 'Random' btns
+    const [btnDisabled, setbtnDisabled] = useState(false)
 
-    useEffect(() => {
-        // If the date exists, update the parent
-        if (date) {
+    const submitDate = (date: Dayjs | null) => {
+        if (date && !btnDisabled) {
+            // Update the parent date to call api
             handleSubmit(date.startOf('day').unix())
+            setTimeout(() => {
+                setbtnDisabled(false)
+            }, 1500)
+            setbtnDisabled(true)
         }
+    }
+
+    const handleRandom = () => {
+        if (!btnDisabled) {
+            const date = getRandomDate()
+            setDate(date)
+            submitDate(date)
+        }
+    }
+    useEffect(() => {
+        // set random to start
+        submitDate(date)
     }, [])
 
     const buttonSize = width > 500 ? "large" : "middle"
     return (
-        <Row justify="center" style={{ padding: 20 }}>
+        <Row justify="center" >
             <Col lg={14} md={18}>
                 <Card
                     bordered={false}
                     headStyle={{ borderBottom: 0 }}
+                    style={{ padding: '0 8px' }}
                 >
                     <h1>
                         The Internet on a Day
@@ -38,9 +57,9 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                         <br /><br />
                         Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and today.
                     </p>
-                    <Row gutter={16} justify="center" align='middle' style={{ marginTop: 12 }}>
+                    <Row gutter={16} justify="center" align='middle' style={{ marginTop: 12, padding: 8 }}>
                         <Col>
-                            Select a date:
+                            <h4 style={{ margin: 0 }}>Select a date:</h4>
                         </Col>
                         <Col>
                             <DatePicker
@@ -54,28 +73,25 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                         <Col>
                             <Button type="primary" htmlType="submit" size={buttonSize}
                                 style={{ paddingLeft: 10, paddingRight: 10 }}
-                                disabled={date === null || date.isBefore('2010-01-01') || date.isAfter(new Date())}
-                                onClick={() => {
-                                    if (date) {
-                                        handleSubmit(date.startOf('day').unix())
-                                    }
-                                }}>
+                                disabled={btnDisabled || date === null || date.isBefore('2010-01-01') || date.isAfter(new Date())}
+                                onClick={() => submitDate(date)}>
                                 Go
                             </Button>
                         </Col>
                     </Row>
 
                     <Row justify='center' align='middle'>
-                        <Divider style={{ width: '40%', minWidth: '40%' }}>
+                        <Divider style={{ width: '50%', minWidth: '50%', paddingBottom: 8 }}>
                             or
                         </Divider>
 
                     </Row>
                     <Row justify='center'>
                         <Button
-                            onClick={() => handleSubmit(getRandomDate().startOf('day').unix())}
+                            onClick={() => handleRandom()}
                             size='large'
-                        // style={{ margin: '8px 0' }}
+                            disabled={btnDisabled}
+                            style={{ backgroundColor: 'black', padding: '0 20px' }}
                         >
                             Random
                         </Button>

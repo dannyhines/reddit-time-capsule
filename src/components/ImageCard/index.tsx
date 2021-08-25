@@ -24,7 +24,7 @@ const ImageCard: React.FC<CardViewProps> = (props) => {
         cover={<Image alt="Failed to load image" src={post.url} />}
         bodyStyle={{ padding: 12 }}
       >
-        <a href={post.full_link}>
+        <a href={post.full_link} target="_blank" rel="noopener noreferrer">
           <Meta
             title={post.title}
             description={`r/${post.subreddit} · ${post.score} pts`}

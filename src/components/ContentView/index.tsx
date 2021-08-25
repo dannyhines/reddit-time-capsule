@@ -27,9 +27,9 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
     }
 
     useEffect(() => {
-        const endDate = (startDate || new Date().getTime()) + 86400
+        const endDate = (startDate || new Date().getTime()) + 86400 // 1 day
         // console.log("making request with startDate ", startDate, ", endDate: ", endDate)
-        const url = `https://api.pushshift.io/reddit/search/submission/?q=&after=${startDate}&before=${endDate}&metadata=false&frequency=hour&advanced=false&sort=desc&sort_type=score&size=8&subreddit=`;
+        const url = `https://api.pushshift.io/reddit/search/submission/?after=${startDate}&before=${endDate}&sort_type=score&sort=desc&size=10&subreddit=`;
 
         const fetchData = async () => {
             setLoading(true)
