@@ -4,7 +4,12 @@
 }
 
 .footer-text {
-  margin-top: 24px;
-  margin-bottom: 24px;
-  font-size: calc(6px + 1vmin);
+  margin: 0;
+  font-size: calc(7px + 1vmin);
+}
+
+.footer-subtitle {
+  font-size: calc(5px + 1vmin);
+  color: #bbbbbb;
+  margin: 5px 0 0;
 }
