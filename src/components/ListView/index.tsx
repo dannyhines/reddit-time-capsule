@@ -20,6 +20,7 @@ const ListView: React.FC<NewsViewProps> = (props) => {
                 <List
                     itemLayout="horizontal"
                     dataSource={posts}
+                    locale={{ emptyText: `No ${title} to show` }}
                     renderItem={item => (
                         <a href={item.full_link} target="_blank" rel="noopener noreferrer">
                             <List.Item>

@@ -41,23 +41,26 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
     }, [])
 
     const buttonSize = width > 500 ? "large" : "middle"
+    const orDividerWidth = width < 500 ? "90%" : width > 800 ? "50%" : "70%"
     return (
         <Row justify="center" >
-            <Col lg={14} md={18}>
+            <Col lg={24} md={18}>
                 <Card
                     bordered={false}
                     headStyle={{ borderBottom: 0 }}
-                    style={{ padding: '0 8px' }}
+                    style={{ width: '100%' }}
                 >
-                    <h1>
-                        The Internet on a Day
-                    </h1>
-                    <p style={{ marginBottom: '1rem' }}>
-                        See what the internet was talking about on a random day in the past decade.
-                        <br /><br />
-                        Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and today.
-                    </p>
-                    <Row gutter={16} justify="center" align='middle' style={{ marginTop: 12, padding: 8 }}>
+                    <div style={{ maxWidth: 600, margin: '0 auto' }}>
+                        <h1>
+                            The Internet on a Day
+                        </h1>
+                        <p style={{ marginBottom: '1rem' }}>
+                            See what the internet was talking about on any day in the past decade.
+
+                            Select a date or click <strong>Random</strong> to see the most upvoted news, pictures and memes from a particular day between 2010 and today.
+                        </p>
+                    </div>
+                    <Row gutter={16} justify="center" align='middle' style={{ margin: '12px -20px 0', padding: '8px 0' }}>
                         <Col>
                             <h4 style={{ margin: 0 }}>Select a date:</h4>
                         </Col>
@@ -81,7 +84,7 @@ const DateSelectionView: React.FC<DateSelectionProps> = (props) => {
                     </Row>
 
                     <Row justify='center' align='middle'>
-                        <Divider style={{ width: '50%', minWidth: '50%', paddingBottom: 8 }}>
+                        <Divider style={{ width: orDividerWidth, minWidth: orDividerWidth, paddingBottom: 8 }}>
                             or
                         </Divider>
 
