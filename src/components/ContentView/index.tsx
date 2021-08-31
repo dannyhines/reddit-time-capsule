@@ -20,6 +20,7 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
     const [memes, setMemes] = useState<Post[]>([])
     const [pics, setPics] = useState<Post[]>([])
     const [politics, setPolitics] = useState<Post[]>([])
+    const [predictions, setPredictions] = useState<Post[]>([])
 
     function dateChanged(value: number) {
         setStartDate(value)
@@ -28,26 +29,35 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
 
     useEffect(() => {
         const endDate = (startDate || new Date().getTime()) + 86400 // 1 day
-        // console.log("making request with startDate ", startDate, ", endDate: ", endDate)
-        const url = `https://api.pushshift.io/reddit/search/submission/?after=${startDate}&before=${endDate}&sort_type=score&sort=desc&size=10&subreddit=`;
+        const oneMonth = 2629743
+
+        const baseURl = 'https://api.pushshift.io/reddit/search/submission/?sort_type=score&sort=desc&size=25'
+        const url = baseURl + `&after=${startDate}&before=${endDate}&subreddit=`;
+        const predictionsUrl = baseURl + `&after=${startDate - oneMonth}&before=${endDate + oneMonth}&subreddit=futurology&q="by%202021"||"by%202020"||"by%202019"`
 
         const fetchData = async () => {
             setLoading(true)
             try {
-                const newsResponse = await fetch(url + 'news,worldnews');
-                const memesResponse = await fetch(url + 'memes,memeeconomy,dankmemes');
+                const newsPoliticsResponse = await fetch(url + 'news,worldnews,politics');
+                const memesResponse = await fetch(url + 'memes,memeeconomy,dankmemes,adviceanimals');
                 const picsResponse = await fetch(url + 'pics');
-                const politicsResponse = await fetch(url + 'politics');
 
-                const newsJson = await newsResponse.json();
+                const newsPoliticsJson = await newsPoliticsResponse.json();
                 const memesJson = await memesResponse.json();
                 const picsJson = await picsResponse.json();
-                const politicsJson = await politicsResponse.json();
 
-                setNews(newsJson.data.slice(0, 10))
+                setNews(newsPoliticsJson.data.filter((x: Post) => x.subreddit === 'news' || x.subreddit === 'worldnews').slice(0, 8))
                 setMemes(memesJson.data.slice(0, 10))
-                setPics(picsJson.data.slice(0, 8))
-                setPolitics(politicsJson.data.slice(0, 8))
+                setPolitics(newsPoliticsJson.data.filter((x: Post) => x.subreddit === 'politics').slice(0, 6))
+                setPics(picsJson.data.slice(0, 7))
+
+                // Only fetch predictions if posts are 2+ years old
+                const twoYears = 63113852
+                if (startDate + twoYears < new Date().getTime()) {
+                    const predicitonsResponse = await fetch(predictionsUrl);
+                    const predictionsJson = await predicitonsResponse.json();
+                    setPredictions(predictionsJson.data.slice(0, 6))
+                }
 
             } catch (error) {
                 console.log("error fetching posts: ", error);
@@ -80,12 +90,16 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
                             {width > 450 ? <h1>{stringDate}</h1> : <h3>{stringDate}</h3>}
                         </Divider>
                         <Row gutter={16} justify='center'>
-                            <Col lg={8} md={12} xs={24}>
+                            <Col lg={8} span={24} sm={{ order: 1 }} xs={{ order: 3 }}>
                                 <ListView title="News" posts={news} />
+
+                                <br />
+                                <ListView title="Predictions" posts={predictions} />
+
                                 <br />
                                 <ListView title="Politics" posts={politics} />
                             </Col>
-                            <Col lg={8} md={12} xs={12}>
+                            <Col lg={8} span={12} order={2} xs={{ order: 1 }} >
                                 <ListTitle>
                                     Pictures
                                 </ListTitle>
@@ -97,7 +111,7 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
                                 ))}
 
                             </Col>
-                            <Col lg={8} md={12} xs={12}>
+                            <Col lg={8} span={12} order={3} xs={{ order: 2 }} >
                                 <ListTitle>
                                     Memes
                                 </ListTitle>
