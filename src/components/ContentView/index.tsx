@@ -38,18 +38,20 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
         const fetchData = async () => {
             setLoading(true)
             try {
-                const newsPoliticsResponse = await fetch(url + 'news,worldnews,politics');
-                const memesResponse = await fetch(url + 'memes,memeeconomy,dankmemes,adviceanimals');
-                const picsResponse = await fetch(url + 'pics');
+                fetch(url + 'news,worldnews,politics')
+                    .then(response => response.json())
+                    .then(res => {
+                        setPolitics(res.data.filter((x: Post) => x.subreddit === 'politics').slice(0, 6))
+                        setNews(res.data.filter((x: Post) => x.subreddit === 'news' || x.subreddit === 'worldnews').slice(0, 8))
+                    })
 
-                const newsPoliticsJson = await newsPoliticsResponse.json();
-                const memesJson = await memesResponse.json();
-                const picsJson = await picsResponse.json();
+                fetch(url + 'memes,memeeconomy,dankmemes,adviceanimals')
+                    .then(response => response.json())
+                    .then(res => setMemes(res.data.slice(0, 10)))
 
-                setNews(newsPoliticsJson.data.filter((x: Post) => x.subreddit === 'news' || x.subreddit === 'worldnews').slice(0, 8))
-                setMemes(memesJson.data.slice(0, 10))
-                setPolitics(newsPoliticsJson.data.filter((x: Post) => x.subreddit === 'politics').slice(0, 6))
-                setPics(picsJson.data.slice(0, 7))
+                fetch(url + 'pics')
+                    .then(response => response.json())
+                    .then(res => setPics(res.data.slice(0, 7)))
 
                 // Only fetch predictions if posts are 2+ years old
                 const twoYears = 63113852
