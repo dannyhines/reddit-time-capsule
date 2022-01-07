@@ -33,7 +33,7 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
 
         const baseURl = 'https://api.pushshift.io/reddit/search/submission/?sort_type=score&sort=desc&size=25'
         const url = baseURl + `&after=${startDate}&before=${endDate}&subreddit=`;
-        const predictionsUrl = baseURl + `&after=${startDate - oneMonth}&before=${endDate + oneMonth}&subreddit=futurology&q="by%202021"||"by%202020"||"by%202019"`
+        const predictionsUrl = baseURl + `&after=${startDate - oneMonth}&before=${endDate + oneMonth}&subreddit=futurology&q="by%202020"||"by%202021"||"by%202022"`
 
         const fetchData = async () => {
             setLoading(true)
