@@ -11,7 +11,7 @@ const Footer: React.FC<HeaderProps> = (props) => {
             <Row justify='center' align='middle' style={{ padding: '1rem 0' }}>
                 <Col span={24}>
                     <p className="footer-text">
-                        Reddit Time Capsule © 2021 · Created by Danny Hines
+                        Reddit Time Capsule © 2022 · Created by Danny Hines
                     </p>
                 </Col>
                 <Col span={24}>
