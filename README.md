@@ -1,5 +1,7 @@
 # Reddit Time Capsule
 
+*After finishing this, I created [Reddit Time Machine](https://github.com/danielchines/reddit-time-capsule) that's a slightly updated version of this web app written with NextJS and deployed with Vercel.*
+
 ### See what the internet was talking about on a random day in the past decade.
 
 [Check it out](https://reddit-time-capsule.com/)
